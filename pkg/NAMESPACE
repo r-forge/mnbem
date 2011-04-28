@@ -1,0 +1,19 @@
+#importFrom(package, "function")
+#exportClasses( "classname")
+
+#exportMethods(
+#      "methodname"
+#)
+useDynLib(mnbem)
+export(
+imputeK,
+sigmaHat,
+gammaHat,
+imputeY,
+condiStat,
+sweeper,
+imputeOLS,
+imputeWLS
+)
+
+#S3method("functionname", "packagename")

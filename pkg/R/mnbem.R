@@ -62,7 +62,7 @@ return(ghat)
 
 imputeY <- function( y, sig, mu )
 {
-    n <- length( y ); nm < -is.na( y )
+    n <- length( y ); nm <- is.na( y )
     indi <- which( !nm ); v <- matrix( 0, n, n )
     cs <- condiStat( sig, mu, y[indi], indi )
     y[nm] <- cs$cmean; v[nm,nm] <- cs$cdisp

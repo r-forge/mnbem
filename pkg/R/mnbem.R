@@ -52,9 +52,31 @@ gammaHat <- function( vmat, w )
             ghat <- ghat + w[ j, l ] * vmat[ mm + j, mm + l ]
         }
     }
-return(ghat)
+    return(ghat)
 }
 
+updateTheta <- function( )
+{
+    
+}
+updateGamma <- function( )
+{
+    
+}
+
+updateSigma <- function( iSigma, iGamma, SigmaHat, V )
+{
+    dG <- dim( iGamma ); dS <- dim( iSigma )
+    n <- dG[1]; m <- dS[1]
+    gv <- 0
+    ind <- matrix(1:(n*m),n,byrow=T)
+    for(i in 1:dG[1]){
+        for( k in 1:dG[2]){
+            gv = gv + iGamma[i,k] * V[ind[i,],ind[k,]]
+        }
+    }
+    return((iSigma%*%gv)/n)
+}
 # given a multivariate normal with mean mu and
 # covariance matrix sig, and a vector of observations y,
 # impute the missing values in y and the corresponding
@@ -88,6 +110,8 @@ sweeper <-function( a, indi, rev=FALSE ){
     d = dim( a )
     if( d[1]!=d[2] ) stop( "Only works on square matrix" )
     if( rev ){ rv = -1 } else { rv = 1 }
+    if( !is.numeric(indi)) stop()
+    if( !is.numeric(a)) stop()
     z <- .Call( "SWEEP",
                 as.integer( indi-1 ),
                 as.double( a ),
@@ -126,8 +150,8 @@ wgt<-outer(diag(ginv),diag(sinv))
 repeat {
     thmax<-0
     for (i in 1:n) for (j in 1:m) {
-	    if (!is.na(k[i,j])) next()
-	    rij<-ras[i,j]; wij<-wgt[i,j]
+        if (!is.na(k[i,j])) next()
+        rij<-ras[i,j]; wij<-wgt[i,j]
         th<--rij/wij
         thmax<-max(thmax,abs(th))
         z[i,j]<-z[i,j]+th

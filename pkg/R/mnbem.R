@@ -110,7 +110,7 @@ sweeper <-function( a, indi, rev = FALSE ){
     d = dim( a )
     if( d[1]!=d[2] ) stop( "Only works on square matrix" )
     if( any( indi <= 0 ) ) { stop( "indx must start from 1" )}
-    if( rev ){ rv = -1 } else { rv = 1 }
+    if( rev == TRUE ){ rv = -1 } else { rv = 1 }
     if( length( indi ) == 0 ){ return ( a ) }
     if( max( indi ) > max( d ) ) { stop( "indx must be with in the range of matrix" )}
     z <- .Call( "SWEEP",

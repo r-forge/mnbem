@@ -106,21 +106,21 @@ condiStat <- function( sig, mu, z, indi )
 
 # beaton's sweep function
 #dyn.load("mnbem.so")
-sweeper <-function( a, indi, rev=FALSE ){
+sweeper <-function( a, indi, rev = FALSE ){
     d = dim( a )
     if( d[1]!=d[2] ) stop( "Only works on square matrix" )
+    if( any( indi <= 0 ) ) { stop( "indx must start from 1" )}
     if( rev ){ rv = -1 } else { rv = 1 }
-    if( !is.numeric(indi)) stop()
-    if( !is.numeric(a)) stop()
+    if( length( indi ) == 0 ){ return ( a ) }
+    if( max( indi ) > max( d ) ) { stop( "indx must be with in the range of matrix" )}
     z <- .Call( "SWEEP",
-                as.integer( indi-1 ),
+                as.integer( indi - 1 ),
                 as.double( a ),
                 as.integer( d[1] ),
                 as.double( rv )
               );
     return( array( z, d ) );
 }
-#
 #sweeper<-function(a,indi) {
 #n<-nrow(a); m<-length(indi)
 #for (j in indi) {
